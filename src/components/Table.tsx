@@ -10,9 +10,9 @@ const Column = ({data}: ColumnProps) => {
     return (
         <tr>
             <td>{data.code}</td>
+            <td>{data.name}</td>
             <td>{data.maturityDate}</td>
             <td>{data.rate}</td>
-            <td>{data.name}</td>
             <td>{data.couponTimes}</td>
             <td>{data.quantity}</td>
             <td>{data.bookValue}</td>

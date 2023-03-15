@@ -32,7 +32,7 @@ const Table = ({positions}: TableProps) => {
     const printList = data.map(d => <Column data={d} />)
 
     return (
-        <table>
+        <table className='table table-hover'>
             <thead>
                 <tr>
                     <th>銘柄コード</th>

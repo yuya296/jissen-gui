@@ -28,10 +28,6 @@ type AddPositionInputs = {
 }
 
 const AddPosition = () => {
-    const [code, setCode] = useState<string>("");
-    const [quantity, setQuantity] = useState<number>(0);
-    const [bookValue, setBookValue] = useState<number>(0);
-
     const {
         register, 
         handleSubmit, 
@@ -39,14 +35,13 @@ const AddPosition = () => {
     } = useForm<AddPositionInputs>();
 
     const onSubmit: SubmitHandler<AddPositionInputs> = (data) => {
-        console.log(data);
+        alert(data);
         reset();
     }
 
     return (
-        <div className='container-fluid'>
-       
-
+        <div className='container-sm'>
+            <h2>在庫を追加する</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='input-group mb-3'>
                     <span className='input-group-text'>銘柄</span>

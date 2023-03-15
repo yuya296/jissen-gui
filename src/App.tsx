@@ -11,7 +11,7 @@ function App() {
       <div className='container-lg'>
         <h1>債権管理アプリ</h1>
         <Table positions={initialdata} />
-        <AddPosition />
+        <AddPosition codes={codes}/>
       </div>
     </div>
   );

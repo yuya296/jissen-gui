@@ -7,7 +7,11 @@ type AddPositionInputs = {
     bookValue: number;
 }
 
-const AddPosition = () => {
+type AddPositionProps = {
+    codes: string[];
+}
+
+const AddPosition = ({codes}:AddPositionProps) => {
     const {
         register,
         handleSubmit,
@@ -31,7 +35,7 @@ const AddPosition = () => {
                             required: "銘柄コードを入力してください",
                         })}>
 
-                        {['code1', 'code2'].map(e => (<option>{e}</option>))}
+                        {codes.map(e => (<option>{e}</option>))}
                     </select>
                 </div>
 

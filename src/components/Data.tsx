@@ -1,14 +1,4 @@
-interface MergedData {
-    code: string,
-    name: string,
-    maturityDate: string,
-    rate: number,
-    couponTimes: number,
-    quantity: number,
-    bookValue: number,
-    marketValue: number,
-    profitAndLoss: number,
-}
+import MergedData from "./MergedData";
 
 const initialdata:MergedData[] = [
   {
@@ -48,4 +38,4 @@ const initialdata:MergedData[] = [
 
 const codes:string[] = ['code1', 'code2', 'code3']
 
-export default initialdata;
+export {initialdata, codes};

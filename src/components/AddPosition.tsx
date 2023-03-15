@@ -1,26 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-type InputBoxProps = {
-    id: string;
-    name: string;
-    placeholder: string;
-}
-
-const InputBox = ({ id, name, placeholder }: InputBoxProps) => {
-    return (
-        <div className='input-group mb-3'>
-            <span className='input-group-text'>{name}</span>
-            <input
-                className='form-control'
-                id={id}
-                placeholder={placeholder}
-                name={name}
-            />
-        </div>
-    )
-}
-
 type AddPositionInputs = {
     code: string;
     quantity: number;
@@ -29,8 +9,8 @@ type AddPositionInputs = {
 
 const AddPosition = () => {
     const {
-        register, 
-        handleSubmit, 
+        register,
+        handleSubmit,
         reset
     } = useForm<AddPositionInputs>();
 
@@ -45,19 +25,19 @@ const AddPosition = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='input-group mb-3'>
                     <span className='input-group-text'>銘柄</span>
-                    <select 
-                        className='form-select' 
+                    <select
+                        className='form-select'
                         {...register('code', {
                             required: "銘柄コードを入力してください",
                         })}>
 
-                        {['code1','code2'].map(e => (<option>{e}</option>))}
+                        {['code1', 'code2'].map(e => (<option>{e}</option>))}
                     </select>
                 </div>
 
                 <div className='input-group mb-3'>
                     <span className='input-group-text'>価格</span>
-                    <input 
+                    <input
                         className='form-control'
                         {...register("bookValue", {
                             required: "価格を入力してください",
@@ -66,7 +46,7 @@ const AddPosition = () => {
 
                 <div className='input-group mb-3'>
                     <span className='input-group-text'>数量</span>
-                    <input 
+                    <input
                         className='form-control'
                         {...register("quantity", {
                             required: "数量を入力してください",
@@ -75,10 +55,7 @@ const AddPosition = () => {
 
                 <input type="submit" className='btn btn-default' />
             </form>
-
         </div>
-
-
     )
 }
 

@@ -24,7 +24,6 @@ const AddPosition = ({codes}:AddPositionProps) => {
 
     return (
         <div className='container-sm'>
-            <h2>在庫を追加する</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='input-group mb-3'>
                     <span className='input-group-text'>銘柄</span>
@@ -55,8 +54,6 @@ const AddPosition = ({codes}:AddPositionProps) => {
                             required: "数量を入力してください",
                         })} />
                 </div>
-
-                <input type="submit" className='btn btn-default' />
             </form>
         </div>
     )

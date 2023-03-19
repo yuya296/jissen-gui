@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { initialdata, codes } from './components/Data';
 import Table from './components/Table';
@@ -11,9 +10,16 @@ function App() {
     <div className="App">
       <div className='container-lg'>
         <h1>債権管理アプリ</h1>
+
+        <Modal 
+          title='在庫を追加する'
+          onClick={() => alert('click')}
+        >
+          <AddPosition codes={codes} />
+        </Modal>
+
         <Table positions={initialdata} />
-        <AddPosition codes={codes}/>
-        <Modal />
+
       </div>
     </div>
   );

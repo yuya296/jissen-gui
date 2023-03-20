@@ -7,6 +7,7 @@ import AddPosition from './components/AddPosition';
 import Modal from './components/Modal'
 import MergedData from './components/MergedData';
 
+
 const url = 'http://localhost:8080';
 
 function App() {
@@ -59,6 +60,8 @@ function App() {
         <Table positions={data} />
 
         <button onClick={addPosition}>test</button>
+
+
       </div>
     </div>
   );

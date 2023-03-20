@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import React, { useState } from 'react';
 import MergedData from './MergedData';
 
@@ -27,10 +26,6 @@ type TableProps = {
 }
 
 const Table = ({positions}: TableProps) => {
-    const [data, setData] = useState<MergedData[]>(positions);
-
-    const printList = data.map(d => <Column data={d} />)
-
     return (
         <table className='table table-hover'>
             <thead>
@@ -48,11 +43,10 @@ const Table = ({positions}: TableProps) => {
             </thead>
 
             <tbody>
-                {printList}
+                {positions.map(d => <Column data={d} key={d.code} />)}
             </tbody>
         </table>
     )
-
 }
 
 

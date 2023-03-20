@@ -8,14 +8,16 @@ type ModalProps = {
 const Modal = ({title, children = (<></>), onClick}:ModalProps) => {
     return (
         <>
-            <button 
-                type="button" 
-                className="btn btn-primary btn-{themecolor}.rounded-circle.p-0" 
-                data-bs-toggle="modal"
-                data-bs-target="#addPosition"
-            >
-                在庫を追加
-            </button>
+            <div>
+                <button 
+                    type="button" 
+                    className="btn btn-primary btn-{themecolor}.rounded-circle.p-0" 
+                    data-bs-toggle="modal"
+                    data-bs-target="#addPosition"
+                >
+                    在庫を追加
+                </button>
+            </div>
 
             <div className="modal fade" id="addPosition" tabIndex={-1} aria-labelledby="exampleModalLabel">
                 <div className="modal-dialog">

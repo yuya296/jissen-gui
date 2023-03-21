@@ -1,18 +1,21 @@
-import React, {useState} from 'react';
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import React, { useState } from 'react';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import './App.css';
 import { initialdata, codes } from './components/Data';
 import Table from './components/Table';
 import AddPosition from './components/AddPosition';
-import Modal from './components/Modal'
+// import Modal from './components/Modal'
 import MergedData from './components/MergedData';
+
+import Modal from './components/ui/Modal';
+import { Button } from 'react-bootstrap';
 
 
 const url = 'http://localhost:8080';
 
 function App() {
   const getMergedData = () => {
-    let ans:MergedData[] = [];
+    let ans: MergedData[] = [];
     axios
       .get(`${url}/table`)
       .then(response => {
@@ -21,7 +24,7 @@ function App() {
       .catch(e => {
         alert(e.message)
       })
-      return ans;
+    return ans;
   }
 
   // ここにstateとしてデータをもたせて更新する→TableとかModalは再レンダリングされる
@@ -46,21 +49,37 @@ function App() {
       })
   }
 
+  const [show, setShow] = useState(false);
+  const [valid, setValid] = useState('disabled');
+
 
   return (
     <div className="App">
       <div className='container-lg'>
         <h1>債権管理アプリ</h1>
-        <Modal 
+        {/* <Modal 
           title='在庫を追加する'
           onClick={() => addPosition}
         >
           <AddPosition codes={codes} />
-        </Modal>
+        </Modal> */}
         <Table positions={data} />
 
         <button onClick={addPosition}>test</button>
 
+        <Button onClick={() => setShow(!show)}>ボタン</Button>
+        <Modal
+          show={show}
+          title="モーダルテスト"
+          body={<AddPosition codes={codes} />}
+          footer={
+            <>
+              <Button variant="secondary" onClick={() => setShow(false)}>キャンセル</Button>
+              <Button variant={"primary " + valid} onClick={() => setShow(false)}>追加</Button>
+            </>
+          }
+        >
+        </Modal>
 
       </div>
     </div>

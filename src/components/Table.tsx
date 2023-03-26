@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import MergedData from '../types/MergedData';
 
 type ColumnProps = {

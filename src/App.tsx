@@ -5,7 +5,6 @@ import { initialdata, codes } from './test/Data';
 import Table from './components/Table';
 import AddPosition from './components/AddPositionForm';
 import MergedData from './types/MergedData';
-
 import Modal from './components/ui/Modal';
 import { Button } from 'react-bootstrap';
 

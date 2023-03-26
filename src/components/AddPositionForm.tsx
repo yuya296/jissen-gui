@@ -8,23 +8,28 @@ type AddPositionInputs = {
 
 type AddPositionProps = {
     codes: string[];
+    submit: (a:AddPositionInputs)=>void;
+    close: ()=>void;
+    reload: ()=>void;
 }
 
-const AddPosition = ({codes}:AddPositionProps) => {
+const AddPosition = ({codes, submit, close, reload}:AddPositionProps) => {
     const {
         register,
         handleSubmit,
         reset
     } = useForm<AddPositionInputs>();
 
-    const onSubmit: SubmitHandler<AddPositionInputs> = (data) => {
-        alert(data);
+    const onSubmit: SubmitHandler<AddPositionInputs> = (data:AddPositionInputs) => {
+        submit(data);
+        close();
         reset();
+        setTimeout(reload, 500); // 視覚的にどこが追加されたかわかりやすいように遅延
     }
 
     return (
         <div className='container-sm'>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} id='addPosition'>
                 <div className='input-group mb-3'>
                     <span className='input-group-text'>銘柄</span>
                     <select
@@ -55,6 +60,7 @@ const AddPosition = ({codes}:AddPositionProps) => {
                         })} />
                 </div>
             </form>
+            
         </div>
     )
 }

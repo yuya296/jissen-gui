@@ -2,7 +2,7 @@ import MergedData from "../types/MergedData";
 
 const initialdata:MergedData[] = [
   {
-      code: 'code1',
+      code: 'item01',
       name: '銘柄1',
       maturityDate: '20231231',
       rate: 0.5,
@@ -13,7 +13,7 @@ const initialdata:MergedData[] = [
       profitAndLoss: 0,
   },
   {
-      code: 'code2',
+      code: 'item02',
       name: '銘柄2',
       maturityDate: '20231231',
       rate: 0,
@@ -24,7 +24,7 @@ const initialdata:MergedData[] = [
       profitAndLoss: 0,
   },
   {
-      code: 'code3',
+      code: 'item03',
       name: '銘柄3',
       maturityDate: '20231231',
       rate: 0.5,
@@ -36,6 +36,6 @@ const initialdata:MergedData[] = [
   },
 ]
 
-const codes:string[] = ['code1', 'code2', 'code3']
+const codes:string[] = ['item01', 'item02', 'item03']
 
 export {initialdata, codes};

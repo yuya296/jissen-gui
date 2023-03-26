@@ -1,4 +1,4 @@
-import MergedData from '../types/MergedData';
+import MergedData from '../../types/MergedData';
 
 type ColumnProps = {
     data: MergedData;

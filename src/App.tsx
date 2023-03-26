@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import './App.css';
-import { initialdata, codes } from './components/Data';
+import { initialdata, codes } from './test/Data';
 import Table from './components/Table';
-import AddPosition from './components/AddPosition';
-// import Modal from './components/Modal'
-import MergedData from './components/MergedData';
+import AddPosition from './components/AddPositionForm';
+import MergedData from './types/MergedData';
 
 import Modal from './components/ui/Modal';
 import { Button } from 'react-bootstrap';
@@ -57,21 +56,16 @@ function App() {
     <div className="App">
       <div className='container-lg'>
         <h1>債権管理アプリ</h1>
-        {/* <Modal 
-          title='在庫を追加する'
-          onClick={() => addPosition}
-        >
-          <AddPosition codes={codes} />
-        </Modal> */}
         <Table positions={data} />
 
         <button onClick={addPosition}>test</button>
 
-        <Button onClick={() => setShow(!show)}>ボタン</Button>
+        <Button onClick={() => setShow(!show)}>＋ 在庫を追加する</Button>
         <Modal
           show={show}
-          title="モーダルテスト"
+          title="在庫を追加する"
           body={<AddPosition codes={codes} />}
+          onHide={()=>setShow(false)}
           footer={
             <>
               <Button variant="secondary" onClick={() => setShow(false)}>キャンセル</Button>

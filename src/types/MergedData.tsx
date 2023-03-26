@@ -1,4 +1,4 @@
-interface MergedData {
+type MergedData = {
     code:           string,
     name:           string,
     maturityDate:   string,

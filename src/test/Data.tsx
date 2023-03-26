@@ -1,4 +1,4 @@
-import MergedData from "./MergedData";
+import MergedData from "../types/MergedData";
 
 const initialdata:MergedData[] = [
   {

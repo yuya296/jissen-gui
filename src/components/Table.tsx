@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MergedData from './MergedData';
+import MergedData from '../types/MergedData';
 
 type ColumnProps = {
     data: MergedData;

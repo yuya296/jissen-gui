@@ -12,7 +12,7 @@ const Modal = (props:any) => {
     } = props;
 
     return show && (
-        <BootstrapModal show={show} onHide={onHide} {...otherProps}>
+        <BootstrapModal className='m-2' show={show} onHide={onHide} {...otherProps}>
         {
           (title || header) && (
             <BootstrapModal.Header closeButton>

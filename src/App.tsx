@@ -14,10 +14,12 @@ function App() {
   const { data, fetchTable, errorMessage } = useTable();
   const [showModal, setShowModal] = useState(false);
   const [valid, setValid] = useState('');
-  const addPositionHook = useAddPositionForm();
-  const [showAlert, setShowAlert] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
   const [alertColor, setAlertColor] = useState('green');
   const [alertMessage, setAlertMessage] = useState('こんちわ');
+  const addPositionHook = useAddPositionForm({setAlertMessage, setAlertColor, setShowAlert});
+
+  //Todo: useEffectを使えばuseTable不要なのでは？
 
 
   return (
@@ -26,8 +28,8 @@ function App() {
         <h1>債権管理アプリ</h1>
         <Table positions={data} />
 
-        <Button onClick={() => setShowModal(!showModal)}>＋ 在庫を追加する</Button>
-        <Button onClick={() => fetchTable()}>リロード</Button>
+        <Button className='m-2' onClick={() => setShowModal(!showModal)}>＋ 在庫を追加する</Button>
+        <Button className='m-2' onClick={() => fetchTable()}>リロード</Button>
         <Modal
           show={showModal}
           title="在庫を追加する"

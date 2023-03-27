@@ -6,18 +6,19 @@ type AlertProps = {
   color: string;
   show: boolean;
   close: () => void;
-  children?: any;
 }
 
-const Alert = ({ message, color, show, close, children }: AlertProps) => {
+const Alert = ({ message, color, show, close}: AlertProps) => {
 
-  return show ? (<></>) : (
+  return show ? (
     <BootstrapAlert
       onClose={() => close()}
+      variant={color}
+      dismissible={true}
     >
-      {children}
+      {message}
     </BootstrapAlert>
-  );
+  ) : (<></>)
 }
 
 export default Alert;

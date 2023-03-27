@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { codes } from './test/Data';
 import Table from './components/ui/Table';
@@ -8,14 +8,16 @@ import { Button } from 'react-bootstrap';
 
 import { useTable } from './hooks/useTable';
 import { useAddPositionForm } from './hooks/useAddPositionForm';
-
+import Alert from './components/ui/Alert';
 
 function App() {
-
   const { data, fetchTable, errorMessage } = useTable();
-  const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [valid, setValid] = useState('');
   const addPositionHook = useAddPositionForm();
+  const [showAlert, setShowAlert] = useState(true);
+  const [alertColor, setAlertColor] = useState('green');
+  const [alertMessage, setAlertMessage] = useState('こんちわ');
 
 
   return (
@@ -24,21 +26,27 @@ function App() {
         <h1>債権管理アプリ</h1>
         <Table positions={data} />
 
-        <Button onClick={() => setShow(!show)}>＋ 在庫を追加する</Button>
+        <Button onClick={() => setShowModal(!showModal)}>＋ 在庫を追加する</Button>
         <Button onClick={() => fetchTable()}>リロード</Button>
         <Modal
-          show={show}
+          show={showModal}
           title="在庫を追加する"
-          body={<AddPosition codes={codes} submit={addPositionHook.addPosition} close={()=>setShow(false)} reload={fetchTable} />}
-          onHide={() => setShow(false)}
+          body={<AddPosition codes={codes} submit={addPositionHook.addPosition} close={() => setShowModal(false)} reload={fetchTable} />}
+          onHide={() => setShowModal(false)}
           footer={
             <>
-              <Button variant="secondary" onClick={() => setShow(false)}>キャンセル</Button>
+              <Button variant="secondary" onClick={() => setShowModal(false)}>キャンセル</Button>
               <Button type="submit" form='addPosition' variant={"primary " + valid} >追加</Button>
             </>
           }
         >
         </Modal>
+        <Alert 
+          message={alertMessage}
+          color={alertColor}
+          show={showAlert}
+          close={()=>setShowAlert(false)}
+        />
       </div>
     </div>
   );

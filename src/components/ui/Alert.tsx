@@ -1,16 +1,20 @@
 import React from 'react';
 import { Alert as BootstrapAlert } from 'react-bootstrap';
 
-const Alert = (props:any) => {
+type AlertProps = {
+  message: string;
+  color: string;
+  show: boolean;
+  close: () => void;
+  children?: any;
+}
 
-  const {
-    variant,
-    children,
-    ...otherProps
-  } = props;
+const Alert = ({ message, color, show, close, children }: AlertProps) => {
 
-  return (
-    <BootstrapAlert variant={variant} {...otherProps}>
+  return show ? (<></>) : (
+    <BootstrapAlert
+      onClose={() => close()}
+    >
       {children}
     </BootstrapAlert>
   );

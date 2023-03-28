@@ -16,22 +16,26 @@ import { Result } from './types/Result';
 
 function App() {
   const { data, fetchTable, errorMessage } = useTable();
-  const [showModal, setShowModal] = useState(false);
-  const [showMtMModal, setShowMtMModal] = useState(false);
   const [valid, setValid] = useState('');
 
-  const [alertState, setAlertState] = useState<Result>({ message: '', succeeded: false, show: false });
+  const MODALS = {
+    DEFAULT: 'default',
+    ADD_POSITION: 'AddPosition',
+    MTM: 'MtM',
+  }
+  const [modal, setModal] = useState(MODALS.DEFAULT);
+  const closeModal = () => setModal(MODALS.DEFAULT);
 
-  const addPositionHook = useAddPositionForm(setAlertState);
-  const mtmHook = useMtMForm(setAlertState);
+  const [result, setResult] = useState<Result>({ message: '', succeeded: false, show: false });
 
+  const addPositionHook = useAddPositionForm(setResult);
+  const mtmHook = useMtMForm(setResult);
 
-  //Todo: useEffectを使えばuseTable不要なのでは？
 
   useEffect(() => {
     console.log('useEffect was called.');
     fetchTable();
-  }, [alertState])
+  }, [result])
 
 
   return (
@@ -40,18 +44,18 @@ function App() {
         <h1>債権管理アプリ</h1>
         <Table positions={data} />
 
-        <Button className='m-2' onClick={() => setShowModal(!showModal)}>+ 在庫を追加する</Button>
-        <Button className='m-2' onClick={() => setShowMtMModal(true)}>値洗い</Button>
+        <Button className='m-2' onClick={() => setModal(MODALS.ADD_POSITION)}>+ 在庫を追加する</Button>
+        <Button className='m-2' onClick={() => setModal(MODALS.MTM)}>値洗い</Button>
         <Button className='m-2' onClick={() => fetchTable()}>リロード</Button>
 
         <Modal
-          show={showModal}
+          show={modal === MODALS.ADD_POSITION}
           title="在庫を追加する"
-          body={<AddPosition codes={codes} submit={addPositionHook.addPosition} close={() => setShowModal(false)} reload={fetchTable} />}
-          onHide={() => setShowModal(false)}
+          body={<AddPosition codes={codes} submit={addPositionHook.addPosition} close={closeModal} reload={()=>{}} />}
+          onHide={closeModal}
           footer={
             <>
-              <Button variant="secondary" onClick={() => setShowModal(false)}>キャンセル</Button>
+              <Button variant="secondary" onClick={closeModal}>キャンセル</Button>
               <Button type="submit" form='addPosition' variant={"primary " + valid} >追加</Button>
             </>
           }
@@ -59,13 +63,13 @@ function App() {
         </Modal>
 
         <Modal
-          show={showMtMModal}
+          show={modal === MODALS.MTM}
           title='値洗いを実行する'
-          body={<MtMForm codes={codes} submit={mtmHook.mtm} close={() => setShowMtMModal(false)} reload={fetchTable} />}
-          onHide={() => setShowMtMModal(false)}
+          body={<MtMForm codes={codes} submit={mtmHook.mtm} close={closeModal} reload={fetchTable} />}
+          onHide={closeModal}
           footer={
             <>
-              <Button variant="secondary" onClick={() => setShowMtMModal(false)}>キャンセル</Button>
+              <Button variant="secondary" onClick={closeModal}>キャンセル</Button>
               <Button type="submit" form='addPosition' variant={"primary " + valid} >実行</Button>
             </>
           }
@@ -74,8 +78,8 @@ function App() {
         </Modal>
 
         <Alert
-          alertState={alertState}
-          close={() => setAlertState({show:false, succeeded:alertState.succeeded, message:alertState.message})}
+          alertState={result}
+          close={() => setResult({show:false, succeeded:result.succeeded, message:result.message})}
         />
       </div>
     </div>

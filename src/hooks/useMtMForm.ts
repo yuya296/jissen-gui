@@ -7,7 +7,7 @@ type MtMFormProps = {
 }
 
 
-export const useMtMForm = (setAlertState:(as:Result)=>void) => {
+export const useMtMForm = (setResult:(as:Result)=>void) => {
     const [isSucceeded, setSucceeded] = useState<boolean>();
     const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -21,7 +21,7 @@ export const useMtMForm = (setAlertState:(as:Result)=>void) => {
             })
             .then(response => {
                 setSucceeded(true);
-                setAlertState({
+                setResult({
                     succeeded: true,
                     show: true,
                     message:`値洗いに成功しました: [${data.code}] 時価:${data.marketValue}`,
@@ -30,7 +30,7 @@ export const useMtMForm = (setAlertState:(as:Result)=>void) => {
             .catch(e => {
                 setSucceeded(false);
                 setErrorMessage(e.message);
-                setAlertState({
+                setResult({
                     succeeded: true,
                     show: true,
                     message: `追加に失敗しました: ${e.message}`,

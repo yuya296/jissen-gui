@@ -9,7 +9,7 @@ type AddPositionProps = {
 }
 
 
-export const useAddPositionForm = (setAlertState:(as:Result)=>void) => {
+export const useAddPositionForm = (setResult:(as:Result)=>void) => {
     const [isSucceeded, setSucceeded] = useState<boolean>();
     const [errorMessage, setErrorMessage] = useState<string>('');
     const addPosition = async (data:AddPositionProps) => {
@@ -23,7 +23,7 @@ export const useAddPositionForm = (setAlertState:(as:Result)=>void) => {
             })
             .then(response => {
                 setSucceeded(true);
-                setAlertState({
+                setResult({
                     succeeded: true,
                     show: true,
                     message: `追加しました: [${data.code}] 数量:${data.quantity} 簿価:${data.bookValue}`,
@@ -32,7 +32,7 @@ export const useAddPositionForm = (setAlertState:(as:Result)=>void) => {
             .catch(e => {
                 setSucceeded(false);
                 setErrorMessage(e.message);
-                setAlertState({
+                setResult({
                     succeeded: false,
                     show:true,
                     message: `追加に失敗しました: ${e.message}`,

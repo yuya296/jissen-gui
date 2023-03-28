@@ -21,6 +21,11 @@ function App() {
 
   //Todo: useEffectを使えばuseTable不要なのでは？
 
+  useEffect(()=>{
+    console.log('useEffect was called.');
+    fetchTable();
+  },[])
+
 
   return (
     <div className="App">

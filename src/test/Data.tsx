@@ -4,7 +4,7 @@ const initialdata:MergedData[] = [
   {
       code: 'item01',
       name: '銘柄1',
-      maturityDate: '20231231',
+      maturity: '20231231',
       rate: 0.5,
       couponTimes: 1,
       quantity: 100,
@@ -15,7 +15,7 @@ const initialdata:MergedData[] = [
   {
       code: 'item02',
       name: '銘柄2',
-      maturityDate: '20231231',
+      maturity: '20231231',
       rate: 0,
       couponTimes: 1,
       quantity: 300,
@@ -26,7 +26,7 @@ const initialdata:MergedData[] = [
   {
       code: 'item03',
       name: '銘柄3',
-      maturityDate: '20231231',
+      maturity: '20231231',
       rate: 0.5,
       couponTimes: 1,
       quantity: 100,

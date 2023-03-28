@@ -1,7 +1,7 @@
 type MergedData = {
     code:           string,
     name:           string,
-    maturityDate:   string,
+    maturity:   string,
     rate:           number,
     couponTimes:    number,
     quantity:       number,

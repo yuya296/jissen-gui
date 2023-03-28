@@ -12,7 +12,7 @@ const Column = ({data}: ColumnProps) => {
         <tr>
             <td>{data.code}</td>
             <td>{data.name}</td>
-            <td>{data.maturityDate}</td>
+            <td>{data.maturity}</td>
             <td>{data.rate.toFixed(1)}</td>
             <td>{data.couponTimes}</td>
             <td>{data.quantity.toFixed(1)}</td>

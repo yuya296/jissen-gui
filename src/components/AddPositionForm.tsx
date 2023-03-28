@@ -9,10 +9,9 @@ type AddPositionInputs = {
 type AddPositionProps = {
     codes: string[];
     submit: (a:AddPositionInputs)=>void;
-    close: ()=>void;
 }
 
-const AddPosition = ({codes, submit, close}:AddPositionProps) => {
+const AddPosition = ({codes, submit}:AddPositionProps) => {
     const {
         register,
         handleSubmit,
@@ -21,7 +20,6 @@ const AddPosition = ({codes, submit, close}:AddPositionProps) => {
 
     const onSubmit: SubmitHandler<AddPositionInputs> = (data:AddPositionInputs) => {
         submit(data);
-        close();
         reset();
     }
 
@@ -41,20 +39,22 @@ const AddPosition = ({codes, submit, close}:AddPositionProps) => {
                 </div>
 
                 <div className='input-group mb-3'>
-                    <span className='input-group-text'>価格</span>
-                    <input
-                        className='form-control'
-                        {...register("bookValue", {
-                            required: "価格を入力してください",
-                        })} />
-                </div>
-
-                <div className='input-group mb-3'>
                     <span className='input-group-text'>数量</span>
                     <input
                         className='form-control'
                         {...register("quantity", {
                             required: "数量を入力してください",
+                            min: 0,
+                        })} />
+                </div>
+
+                <div className='input-group mb-3'>
+                    <span className='input-group-text'>価格</span>
+                    <input
+                        className='form-control'
+                        {...register("bookValue", {
+                            required: "価格を入力してください",
+                            min: 0,
                         })} />
                 </div>
             </form>

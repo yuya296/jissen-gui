@@ -7,9 +7,8 @@ import './App.css';
 import AddPosition from './components/AddPositionForm';
 import MtMForm from './components/MtMForm';
 import Table from './components/ui/Table';
-import Modal from './components/ui/Modal';
 import Alert from './components/ui/Alert';
-import { Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 // hooks
 import { useTable } from './hooks/useTable';
@@ -26,18 +25,18 @@ function App() {
   const [valid, setValid] = useState('');
 
   const MODALS = {
-    DEFAULT: 'default',
+    X: 'default',
     ADD_POSITION: 'AddPosition',
     MTM: 'MtM',
   }
-  const [modal, setModal] = useState(MODALS.DEFAULT);
-  const closeModal = () => setModal(MODALS.DEFAULT);
+  const [modal, setModal] = useState(MODALS.X);
+  const closeModal = () => setModal(MODALS.X);
 
   const [result, setResult] = useState<Result>({ message: '', succeeded: false, show: false });
 
   const { addPosition } = useAddPositionForm(setResult);
   const { mtm } = useMtMForm(setResult);
-  const { issues, fetchIssues } = useIssues();
+  const { issues, fetchIssues, codes } = useIssues();
 
   useEffect(() => { fetchIssues() }, []);
   useEffect(() => { fetchTable() }, [result]);
@@ -48,34 +47,31 @@ function App() {
         <h1>債権管理アプリ</h1>
         <Table positions={data} />
 
-        <Button variant='outline-primary' onClick={() => setModal(MODALS.ADD_POSITION)}>+ 在庫を追加する</Button>{' '}
+        <Button variant='primary' onClick={() => setModal(MODALS.ADD_POSITION)}>+ 在庫を追加する</Button>{' '}
         <Button variant='primary' onClick={() => setModal(MODALS.MTM)}>値洗い</Button>
 
-        <Modal title="在庫を追加する"
-          show={modal === MODALS.ADD_POSITION}
-          body={<AddPosition codes={issues.map(i => i.code)} submit={addPosition} close={closeModal} />}
-          onHide={closeModal}
-          footer={
-            <>
-              <Button variant="secondary" onClick={closeModal}>キャンセル</Button>
-              <Button type="submit" form='addPosition' variant={"primary " + valid} >追加</Button>
-            </>
-          }
-        >
+        <Modal show={modal === MODALS.ADD_POSITION} onHide={closeModal}>
+          <Modal.Header closeButton><Modal.Title>在庫を追加する</Modal.Title></Modal.Header>
+          <Modal.Body>
+            <AddPosition codes={codes} submit={addPosition} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeModal}>キャンセル</Button>
+            <Button type="submit" form='addPosition' variant={"primary " + valid} onClick={() => setModal(MODALS.X)} >追加</Button>
+          </Modal.Footer>
         </Modal>
 
-        <Modal title='値洗いを実行する'
-          show={modal === MODALS.MTM}
-          body={<MtMForm codes={issues.map(i => i.code)} submit={mtm} close={closeModal} />}
-          onHide={closeModal}
-          footer={
-            <>
-              <Button variant="secondary" onClick={closeModal}>キャンセル</Button>
-              <Button type="submit" form='addPosition' variant={"primary " + valid} >実行</Button>
-            </>
-          }
-        >
+        <Modal show={modal === MODALS.MTM} onHide={closeModal}>
+          <Modal.Header closeButton><Modal.Title>値洗いを実行する</Modal.Title></Modal.Header>
+          <Modal.Body>
+            <MtMForm codes={codes} submit={mtm}></MtMForm>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeModal}>キャンセル</Button>
+            <Button type="submit" form='addPosition' variant={"primary " + valid } onClick={() => setModal(MODALS.X)} >実行</Button>
+          </Modal.Footer>
         </Modal>
+
 
         <Alert
           alertState={result}

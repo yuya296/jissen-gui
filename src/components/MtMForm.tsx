@@ -7,20 +7,18 @@ type MtMInputs = {
 
 type MtMFormProps = {
     codes: string[];
-    submit: (a:MtMInputs)=>void;
-    close: ()=>void;
+    submit: (a: MtMInputs) => void;
 }
 
-const MtMForm = ({codes, submit, close}:MtMFormProps) => {
+const MtMForm = ({ codes, submit }: MtMFormProps) => {
     const {
         register,
         handleSubmit,
         reset
     } = useForm<MtMInputs>();
 
-    const onSubmit: SubmitHandler<MtMInputs> = (data:MtMInputs) => {
+    const onSubmit: SubmitHandler<MtMInputs> = (data: MtMInputs) => {
         submit(data);
-        close();
         reset();
     }
 
@@ -49,7 +47,7 @@ const MtMForm = ({codes, submit, close}:MtMFormProps) => {
                 </div>
 
             </form>
-            
+
         </div>
     )
 }

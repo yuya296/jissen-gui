@@ -6,6 +6,7 @@ import { Issue } from '../types/Issue';
 
 export const useIssues = () => {
     const [issues, setIssues] = useState<Issue[]>([]);
+    const codes = issues.map(issue => issue.code);
     const fetchIssues = async () => {
 
         await apiClient
@@ -20,6 +21,7 @@ export const useIssues = () => {
 
     return {
         issues,
+        codes,
         fetchIssues,
     }
 }

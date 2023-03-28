@@ -1,17 +1,13 @@
 import { useState } from "react";
 import apiClient from "../lib/ApiClient";
+import { Result } from "../types/Result";
 type MtMFormProps = {
     code: string;
     marketValue: number;
 }
 
-type useMtMFormProps = {
-    setAlertMessage: any;
-    setAlertColor: any;
-    setShowAlert: any;
-}
 
-export const useMtMForm = ({setAlertMessage, setAlertColor, setShowAlert}:useMtMFormProps) => {
+export const useMtMForm = (setAlertState:(as:Result)=>void) => {
     const [isSucceeded, setSucceeded] = useState<boolean>();
     const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -25,16 +21,20 @@ export const useMtMForm = ({setAlertMessage, setAlertColor, setShowAlert}:useMtM
             })
             .then(response => {
                 setSucceeded(true);
-                setAlertMessage(`値洗いに成功しました: [${data.code}] 時価:${data.marketValue}`);
-                setAlertColor('primary');
-                setShowAlert(true);
+                setAlertState({
+                    succeeded: true,
+                    show: true,
+                    message:`値洗いに成功しました: [${data.code}] 時価:${data.marketValue}`,
+                })
             })
             .catch(e => {
                 setSucceeded(false);
                 setErrorMessage(e.message);
-                setAlertColor('danger');
-                setAlertMessage(`追加に失敗しました: ${e.message}`);
-                setShowAlert(true);
+                setAlertState({
+                    succeeded: true,
+                    show: true,
+                    message: `追加に失敗しました: ${e.message}`,
+                })
             })
         
     }

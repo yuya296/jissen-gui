@@ -12,23 +12,26 @@ import { useAddPositionForm } from './hooks/useAddPositionForm';
 import Alert from './components/ui/Alert';
 import { useMtMForm } from './hooks/useMtMForm';
 
+import { Result } from './types/Result';
+
 function App() {
   const { data, fetchTable, errorMessage } = useTable();
   const [showModal, setShowModal] = useState(false);
   const [showMtMModal, setShowMtMModal] = useState(false);
   const [valid, setValid] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertColor, setAlertColor] = useState('green');
-  const [alertMessage, setAlertMessage] = useState('こんちわ');
-  const addPositionHook = useAddPositionForm({ setAlertMessage, setAlertColor, setShowAlert });
-  const mtmHook = useMtMForm({setAlertMessage, setAlertColor, setShowAlert});
+
+  const [alertState, setAlertState] = useState<Result>({ message: '', succeeded: false, show: false });
+
+  const addPositionHook = useAddPositionForm(setAlertState);
+  const mtmHook = useMtMForm(setAlertState);
+
 
   //Todo: useEffectを使えばuseTable不要なのでは？
 
   useEffect(() => {
     console.log('useEffect was called.');
     fetchTable();
-  }, [])
+  }, [alertState])
 
 
   return (
@@ -58,7 +61,7 @@ function App() {
         <Modal
           show={showMtMModal}
           title='値洗いを実行する'
-          body={<MtMForm codes={codes} submit={mtmHook.mtm} close={()=>setShowMtMModal(false)} reload={fetchTable} />}
+          body={<MtMForm codes={codes} submit={mtmHook.mtm} close={() => setShowMtMModal(false)} reload={fetchTable} />}
           onHide={() => setShowMtMModal(false)}
           footer={
             <>
@@ -71,10 +74,8 @@ function App() {
         </Modal>
 
         <Alert
-          message={alertMessage}
-          color={alertColor}
-          show={showAlert}
-          close={() => setShowAlert(false)}
+          alertState={alertState}
+          close={() => setAlertState({show:false, succeeded:alertState.succeeded, message:alertState.message})}
         />
       </div>
     </div>

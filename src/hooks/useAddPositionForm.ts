@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import apiClient from '../lib/ApiClient';
+import { Result } from '../types/Result';
 
 type AddPositionProps = {
     code: string;
@@ -7,13 +8,8 @@ type AddPositionProps = {
     bookValue: number;
 }
 
-type useAddPositionFormProps = {
-    setAlertMessage: any;
-    setAlertColor: any;
-    setShowAlert: any;
-}
 
-export const useAddPositionForm = ({setAlertMessage, setAlertColor, setShowAlert}:useAddPositionFormProps) => {
+export const useAddPositionForm = (setAlertState:(as:Result)=>void) => {
     const [isSucceeded, setSucceeded] = useState<boolean>();
     const [errorMessage, setErrorMessage] = useState<string>('');
     const addPosition = async (data:AddPositionProps) => {
@@ -27,16 +23,20 @@ export const useAddPositionForm = ({setAlertMessage, setAlertColor, setShowAlert
             })
             .then(response => {
                 setSucceeded(true);
-                setAlertMessage(`追加しました: [${data.code}] 数量:${data.quantity} 簿価:${data.bookValue}`);
-                setAlertColor('primary');
-                setShowAlert(true);
+                setAlertState({
+                    succeeded: true,
+                    show: true,
+                    message: `追加しました: [${data.code}] 数量:${data.quantity} 簿価:${data.bookValue}`,
+                })
             })
             .catch(e => {
                 setSucceeded(false);
                 setErrorMessage(e.message);
-                setAlertColor('danger');
-                setAlertMessage(`追加に失敗しました: ${e.message}`);
-                setShowAlert(true);
+                setAlertState({
+                    succeeded: false,
+                    show:true,
+                    message: `追加に失敗しました: ${e.message}`,
+                })
             })
     }
 

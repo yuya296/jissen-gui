@@ -1,22 +1,24 @@
 import React from 'react';
 import { Alert as BootstrapAlert } from 'react-bootstrap';
+import { Result } from '../../types/Result';
 
 type AlertProps = {
-  message: string;
-  color: string;
-  show: boolean;
+  alertState: Result;
+  // message: string;
+  // color: string;
+  // show: boolean;
   close: () => void;
 }
 
-const Alert = ({ message, color, show, close}: AlertProps) => {
+const Alert = ({ alertState, close }: AlertProps) => {
 
-  return show ? (
+  return alertState.show ? (
     <BootstrapAlert
       onClose={() => close()}
-      variant={color}
+      variant={alertState.succeeded ? 'primary' : 'danger'}
       dismissible={true}
     >
-      {message}
+      {alertState.message}
     </BootstrapAlert>
   ) : (<></>)
 }

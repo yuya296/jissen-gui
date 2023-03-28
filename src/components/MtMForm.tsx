@@ -9,10 +9,9 @@ type MtMFormProps = {
     codes: string[];
     submit: (a:MtMInputs)=>void;
     close: ()=>void;
-    reload: ()=>void;
 }
 
-const MtMForm = ({codes, submit, close, reload}:MtMFormProps) => {
+const MtMForm = ({codes, submit, close}:MtMFormProps) => {
     const {
         register,
         handleSubmit,
@@ -23,7 +22,6 @@ const MtMForm = ({codes, submit, close, reload}:MtMFormProps) => {
         submit(data);
         close();
         reset();
-        setTimeout(reload, 500); // 視覚的にどこが追加されたかわかりやすいように遅延
     }
 
     return (

@@ -10,10 +10,9 @@ type AddPositionProps = {
     codes: string[];
     submit: (a:AddPositionInputs)=>void;
     close: ()=>void;
-    reload: ()=>void;
 }
 
-const AddPosition = ({codes, submit, close, reload}:AddPositionProps) => {
+const AddPosition = ({codes, submit, close}:AddPositionProps) => {
     const {
         register,
         handleSubmit,
@@ -24,7 +23,6 @@ const AddPosition = ({codes, submit, close, reload}:AddPositionProps) => {
         submit(data);
         close();
         reset();
-        setTimeout(reload, 500); // 視覚的にどこが追加されたかわかりやすいように遅延
     }
 
     return (

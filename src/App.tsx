@@ -52,12 +52,12 @@ function App() {
 
         <Button className='m-2' onClick={() => setModal(MODALS.ADD_POSITION)}>+ 在庫を追加する</Button>
         <Button className='m-2' onClick={() => setModal(MODALS.MTM)}>値洗い</Button>
-        <Button className='m-2' onClick={() => fetchTable()}>リロード</Button>
+        {/* <Button className='m-2' onClick={() => fetchTable()}>リロード</Button> */}
 
         <Modal
-          show={modal === MODALS.ADD_POSITION}
           title="在庫を追加する"
-          body={<AddPosition codes={codes} submit={addPositionHook.addPosition} close={closeModal} reload={() => { }} />}
+          show={modal === MODALS.ADD_POSITION}
+          body={<AddPosition codes={codes} submit={addPositionHook.addPosition} close={closeModal} />}
           onHide={closeModal}
           footer={
             <>
@@ -71,7 +71,7 @@ function App() {
         <Modal
           show={modal === MODALS.MTM}
           title='値洗いを実行する'
-          body={<MtMForm codes={codes} submit={mtmHook.mtm} close={closeModal} reload={fetchTable} />}
+          body={<MtMForm codes={codes} submit={mtmHook.mtm} close={closeModal} />}
           onHide={closeModal}
           footer={
             <>

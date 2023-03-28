@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+
 import { codes } from './test/Data';
-import Table from './components/ui/Table';
-import AddPosition from './components/AddPositionForm';
-import MtMForm from './components/MtMForm';
-import Modal from './components/ui/Modal';
-import { Button } from 'react-bootstrap';
 
-import { useTable } from './hooks/useTable';
+// components
+import AddPosition  from './components/AddPositionForm';
+import MtMForm      from './components/MtMForm';
+import Table        from './components/ui/Table';
+import Modal        from './components/ui/Modal';
+import Alert        from './components/ui/Alert';
+import { Button }   from 'react-bootstrap';
+
+// hooks
+import { useTable }           from './hooks/useTable';
 import { useAddPositionForm } from './hooks/useAddPositionForm';
-import Alert from './components/ui/Alert';
-import { useMtMForm } from './hooks/useMtMForm';
+import { useMtMForm }         from './hooks/useMtMForm';
 
+// types
 import { Result } from './types/Result';
+
 
 function App() {
   const { data, fetchTable, errorMessage } = useTable();
@@ -51,7 +57,7 @@ function App() {
         <Modal
           show={modal === MODALS.ADD_POSITION}
           title="在庫を追加する"
-          body={<AddPosition codes={codes} submit={addPositionHook.addPosition} close={closeModal} reload={()=>{}} />}
+          body={<AddPosition codes={codes} submit={addPositionHook.addPosition} close={closeModal} reload={() => { }} />}
           onHide={closeModal}
           footer={
             <>
@@ -79,7 +85,7 @@ function App() {
 
         <Alert
           alertState={result}
-          close={() => setResult({show:false, succeeded:result.succeeded, message:result.message})}
+          close={() => setResult({ show: false, succeeded: result.succeeded, message: result.message })}
         />
       </div>
     </div>

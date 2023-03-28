@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
-import { codes } from './test/Data';
+// import { codes } from './test/Data';
 
 // components
-import AddPosition  from './components/AddPositionForm';
-import MtMForm      from './components/MtMForm';
-import Table        from './components/ui/Table';
-import Modal        from './components/ui/Modal';
-import Alert        from './components/ui/Alert';
-import { Button }   from 'react-bootstrap';
+import AddPosition from './components/AddPositionForm';
+import MtMForm from './components/MtMForm';
+import Table from './components/ui/Table';
+import Modal from './components/ui/Modal';
+import Alert from './components/ui/Alert';
+import { Button } from 'react-bootstrap';
 
 // hooks
-import { useTable }           from './hooks/useTable';
+import { useTable } from './hooks/useTable';
 import { useAddPositionForm } from './hooks/useAddPositionForm';
-import { useMtMForm }         from './hooks/useMtMForm';
+import { useMtMForm } from './hooks/useMtMForm';
 
 // types
 import { Result } from './types/Result';
+import { useIssues } from './hooks/useIssues';
 
 
 function App() {
-  const { data, fetchTable, errorMessage } = useTable();
+  const { data, fetchTable } = useTable();
   const [valid, setValid] = useState('');
 
   const MODALS = {
@@ -34,15 +35,12 @@ function App() {
 
   const [result, setResult] = useState<Result>({ message: '', succeeded: false, show: false });
 
-  const addPositionHook = useAddPositionForm(setResult);
-  const mtmHook = useMtMForm(setResult);
+  const { addPosition } = useAddPositionForm(setResult);
+  const { mtm } = useMtMForm(setResult);
+  const { issues, fetchIssues } = useIssues();
 
-
-  useEffect(() => {
-    console.log('useEffect was called.');
-    fetchTable();
-  }, [result])
-
+  useEffect(() => { fetchIssues() }, []);
+  useEffect(() => { fetchTable() }, [result]);
 
   return (
     <div className="App">
@@ -50,14 +48,12 @@ function App() {
         <h1>債権管理アプリ</h1>
         <Table positions={data} />
 
-        <Button className='m-2' onClick={() => setModal(MODALS.ADD_POSITION)}>+ 在庫を追加する</Button>
-        <Button className='m-2' onClick={() => setModal(MODALS.MTM)}>値洗い</Button>
-        {/* <Button className='m-2' onClick={() => fetchTable()}>リロード</Button> */}
+        <Button variant='outline-primary' onClick={() => setModal(MODALS.ADD_POSITION)}>+ 在庫を追加する</Button>{' '}
+        <Button variant='primary' onClick={() => setModal(MODALS.MTM)}>値洗い</Button>
 
-        <Modal
-          title="在庫を追加する"
+        <Modal title="在庫を追加する"
           show={modal === MODALS.ADD_POSITION}
-          body={<AddPosition codes={codes} submit={addPositionHook.addPosition} close={closeModal} />}
+          body={<AddPosition codes={issues.map(i => i.code)} submit={addPosition} close={closeModal} />}
           onHide={closeModal}
           footer={
             <>
@@ -68,10 +64,9 @@ function App() {
         >
         </Modal>
 
-        <Modal
+        <Modal title='値洗いを実行する'
           show={modal === MODALS.MTM}
-          title='値洗いを実行する'
-          body={<MtMForm codes={codes} submit={mtmHook.mtm} close={closeModal} />}
+          body={<MtMForm codes={issues.map(i => i.code)} submit={mtm} close={closeModal} />}
           onHide={closeModal}
           footer={
             <>
@@ -80,7 +75,6 @@ function App() {
             </>
           }
         >
-
         </Modal>
 
         <Alert

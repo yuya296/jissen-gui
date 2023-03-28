@@ -8,17 +8,21 @@ const NA = '#N/A';
 
 
 const Column = ({data}: ColumnProps) => {
+    const rule = {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+    }
     return (
         <tr>
-            <td>{data.code}</td>
-            <td>{data.name}</td>
-            <td>{data.maturity}</td>
-            <td>{data.rate.toFixed(1)}</td>
-            <td>{data.couponTimes}</td>
-            <td>{data.quantity.toFixed(1)}</td>
-            <td>{data.bookValue.toFixed(1)}</td>
-            <td>{data.marketValue?.toFixed(1)??NA}</td>
-            <td>{data.profitAndLoss?.toFixed(1)??NA}</td>
+            <td className='text-center'>{data.code}</td>
+            <td className='text-center'>{data.name}</td>
+            <td className='text-center'>{data.maturity}</td>
+            <td className='text-end'>{data.rate.toLocaleString('ja',rule)}%</td>
+            <td className='text-center'>{data.couponTimes}回</td>
+            <td className='text-end'>{data.quantity.toLocaleString('ja',rule)}</td>
+            <td className='text-end'>{data.bookValue.toLocaleString('ja',rule)}</td>
+            <td className='text-end'>{data.marketValue?.toLocaleString('ja',rule)??NA}</td>
+            <td className='text-end'>{data.profitAndLoss?.toLocaleString('ja',rule)??NA}</td>
         </tr>
     )
 }

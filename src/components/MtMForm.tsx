@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { Issue } from '../types/Issue';
 
 type MtMInputs = {
     code: string;
@@ -6,11 +7,11 @@ type MtMInputs = {
 }
 
 type MtMFormProps = {
-    codes: string[];
+    issues: Issue[];
     submit: (a: MtMInputs) => void;
 }
 
-const MtMForm = ({ codes, submit }: MtMFormProps) => {
+const MtMForm = ({ issues, submit }: MtMFormProps) => {
     const {
         register,
         handleSubmit,
@@ -24,7 +25,7 @@ const MtMForm = ({ codes, submit }: MtMFormProps) => {
 
     return (
         <div className='container-sm'>
-            <form onSubmit={handleSubmit(onSubmit)} id='addPosition'>
+            <form onSubmit={handleSubmit(onSubmit)} id='mtm'>
                 <div className='input-group mb-3'>
                     <span className='input-group-text'>銘柄</span>
                     <select
@@ -33,7 +34,7 @@ const MtMForm = ({ codes, submit }: MtMFormProps) => {
                             required: "銘柄コードを入力してください",
                         })}>
 
-                        {codes.map(e => (<option>{e}</option>))}
+                        {issues.map(e => (<option value={e.code}>{`[${e.code}] ${e.name}`}</option>))}
                     </select>
                 </div>
 

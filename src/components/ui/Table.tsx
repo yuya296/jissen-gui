@@ -14,10 +14,10 @@ const Column = ({data}: ColumnProps) => {
     }
     return (
         <tr>
-            <td className='text-center'>{data.code}</td>
-            <td className='text-center'>{data.name}</td>
+            <td className='text-start'>{data.code}</td>
+            <td className='text-start'>{data.name}</td>
             <td className='text-center'>{data.maturity}</td>
-            <td className='text-end'>{data.rate.toLocaleString('ja',rule)}%</td>
+            <td className='text-end'>{data.rate.toLocaleString('ja')}%</td>
             <td className='text-center'>{data.couponTimes}回</td>
             <td className='text-end'>{data.quantity.toLocaleString('ja',rule)}</td>
             <td className='text-end'>{data.bookValue.toLocaleString('ja',rule)}</td>
@@ -33,18 +33,18 @@ type TableProps = {
 
 const Table = ({positions}: TableProps) => {
     return (
-        <table className='table table-hover'>
+        <table className='table table-hover table-responsive'>
             <thead>
                 <tr>
-                    <th>銘柄コード</th>
-                    <th>銘柄名</th>
-                    <th>償還年月日</th>
-                    <th>利率</th>
-                    <th>クーポン回数</th>
-                    <th>保有数量</th>
-                    <th>簿価</th>
-                    <th>時価</th>
-                    <th>評価損益</th>
+                    <th className='text-start'>銘柄コード</th>
+                    <th className='text-start'>銘柄名</th>
+                    <th className='text-center'>償還年月日</th>
+                    <th className='text-center'>利率</th>
+                    <th className='text-center'>クーポン回数</th>
+                    <th className='text-center'>保有数量</th>
+                    <th className='text-center'>簿価</th>
+                    <th className='text-center'>時価</th>
+                    <th className='text-center'>評価損益</th>
                 </tr>
             </thead>
 

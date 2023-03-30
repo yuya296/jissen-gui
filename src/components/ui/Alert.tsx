@@ -3,20 +3,20 @@ import { Alert as BootstrapAlert } from 'react-bootstrap';
 import { Result } from '../../types/Result';
 
 type AlertProps = {
-  alertState: Result;
+  result: Result;
   close: () => void;
 }
 
-const Alert = ({ alertState, close }: AlertProps) => {
+const Alert = ({ result, close }: AlertProps) => {
 
-  return alertState.show ? (
+  return result.show ? (
     <div className='container-fluid'>
       <BootstrapAlert
         onClose={() => close()}
-        variant={alertState.succeeded ? 'primary' : 'danger'}
+        variant={result.succeeded ? 'primary' : 'danger'}
         dismissible={true}
       >
-        {alertState.message}
+        {result.message}
       </BootstrapAlert>
     </div>
   ) : (<></>)

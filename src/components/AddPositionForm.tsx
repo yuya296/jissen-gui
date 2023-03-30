@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { Issue } from '../types/Issue';
 
 type AddPositionInputs = {
     code: string;
@@ -7,11 +8,11 @@ type AddPositionInputs = {
 }
 
 type AddPositionProps = {
-    codes: string[];
+    issues: Issue[];
     submit: (a:AddPositionInputs)=>void;
 }
 
-const AddPosition = ({codes, submit}:AddPositionProps) => {
+const AddPosition = ({issues, submit}:AddPositionProps) => {
     const {
         register,
         handleSubmit,
@@ -33,8 +34,7 @@ const AddPosition = ({codes, submit}:AddPositionProps) => {
                         {...register('code', {
                             required: "銘柄コードを入力してください",
                         })}>
-
-                        {codes.map(e => (<option>{e}</option>))}
+                        {issues.map(e => (<option value={e.code}>{`[${e.code}] ${e.name}`}</option>))}
                     </select>
                 </div>
 

@@ -6,6 +6,7 @@ type AddPositionProps = {
     code: string;
     quantity: number;
     bookValue: number;
+    target: string
 }
 
 
@@ -16,7 +17,7 @@ export const useAddPositionForm = (setResult:(as:Result)=>void) => {
         setErrorMessage('');
 
         await apiClient
-            .post('/positions/add', {
+            .post(`/${data.target}/add`, {
                 code: data?.code,
                 quantity: data?.quantity,
                 bookValue: data?.bookValue,
@@ -37,6 +38,8 @@ export const useAddPositionForm = (setResult:(as:Result)=>void) => {
                     show:true,
                     message: `追加に失敗しました: ${e.message}`,
                 })
+                console.log(e.response);
+                console.log(e);
             })
     }
 

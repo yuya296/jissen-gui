@@ -22,6 +22,9 @@ import { AiFillEdit, AiOutlinePlus } from 'react-icons//ai';
 import LOGO from './React-icon.svg';
 import { CustomTable } from './components/ui/CustomTable';
 import { HidableDiv } from './components/ui/HidableDiv';
+import DealList from './components/DealList';
+import { useDeals } from './hooks/useDeals';
+import { DealListModal } from './components/DealListModal';
 
 
 function App() {
@@ -31,6 +34,7 @@ function App() {
     CLOSE: 'default',
     ADD_POSITION: 'AddPosition',
     MTM: 'MtM',
+    DEALS: 'Deals',
   }
   const [modal, setModal] = useState<string>(MODALS.CLOSE);
 
@@ -45,10 +49,14 @@ function App() {
 
   const { addPosition } = useAddPositionForm(setResult);
   const { mtm } = useMtMForm(setResult);
-  const { issues, fetchIssues, codes } = useIssues();
+  const { issues, fetchIssues, } = useIssues();
+  const { deals, fetchDeals, deleteDeal } = useDeals(setResult);
 
-  useEffect(() => { fetchIssues() }, []);
-  useEffect(() => { setTimeout(fetchTable, 800) }, [result]);
+  const [dealTarget, setDealTarget] = useState('');
+
+  useEffect(() => { fetchIssues(); fetchDeals(dealTarget); }, []);
+  useEffect(() => { setTimeout(fetchTable, 800); fetchDeals(dealTarget) }, [result]);
+  useEffect(() => { fetchDeals(dealTarget) }, [dealTarget])
 
   return (
     <div className="App">
@@ -76,6 +84,7 @@ function App() {
             <AiOutlinePlus /> 在庫を追加する
           </Button>{' '}
           <Button variant='outline-dark' onClick={() => setModal(MODALS.MTM)}><AiFillEdit /> 値洗いを実行する</Button>
+          <Button variant='outline-dark' onClick={() => setModal(MODALS.DEALS)}><AiFillEdit /> 値洗いを実行する</Button>
           <DropdownButton id='view' title={view} variant='secondary'>
             <Dropdown.Item onClick={() => setView(VIEWS.TABLE)}>Table</Dropdown.Item>
             <Dropdown.Item onClick={() => setView(VIEWS.LIST)}>List</Dropdown.Item>
@@ -83,7 +92,7 @@ function App() {
         </div>
 
         <HidableDiv isShow={view === VIEWS.TABLE}>
-          <Table positions={data} />
+          <Table positions={data} setDealTarget={(code) => {setDealTarget(code); setModal(MODALS.DEALS)}} />
         </HidableDiv>
 
         <HidableDiv isShow={view === VIEWS.LIST}>
@@ -106,6 +115,15 @@ function App() {
         >
           <MtMForm issues={issues} submit={mtm} />
         </Modal>
+
+        <DealListModal 
+          code={dealTarget}
+          deals={deals}
+          issues={issues}
+          show={modal === MODALS.DEALS}
+          onHide={() => setModal(MODALS.CLOSE)}
+          del={deleteDeal}
+        />
 
 
         <Alert result={result} close={hideAlert} />

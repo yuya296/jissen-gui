@@ -1,6 +1,7 @@
-import { ListGroup, Table } from "react-bootstrap"
+import { Button, ListGroup, Table } from "react-bootstrap"
 import { Issue } from "../../types/Issue"
 import MergedData from "../../types/MergedData";
+import { AiFillEdit, AiOutlinePlus } from 'react-icons//ai';
 
 type CustomTableProps = {
     data: MergedData[];
@@ -24,6 +25,10 @@ export const CustomTable = ({ data }: CustomTableProps) => {
                                     利率: {item.rate} % | 
                                     償還: {item.maturity} | 
                                     クーポン: {item.couponTimes} 回
+                                </div>
+                                <div>
+                                    <Button variant="" size="sm" className="text-secondary"> <AiOutlinePlus/> </Button>
+                                    <Button variant="" size="sm" className="text-secondary"> <AiFillEdit/> </Button>
                                 </div>
                             </td>
                             <td className="text-end align-middle" width={200}>

@@ -6,7 +6,7 @@ import AddPosition from './components/AddPositionForm';
 import MtMForm from './components/MtMForm';
 import Table from './components/ui/Table';
 import Alert from './components/ui/Alert';
-import { Button, Nav, Navbar } from 'react-bootstrap';
+import { Button, Dropdown, DropdownButton, Nav, Navbar } from 'react-bootstrap';
 import { Modal } from './components/ui/Modal';
 
 // hooks
@@ -20,6 +20,8 @@ import { useIssues } from './hooks/useIssues';
 
 import { AiFillEdit, AiOutlinePlus } from 'react-icons//ai';
 import LOGO from './React-icon.svg';
+import { CustomTable } from './components/ui/CustomTable';
+import { HidableDiv } from './components/ui/HidableDiv';
 
 
 function App() {
@@ -31,6 +33,12 @@ function App() {
     MTM: 'MtM',
   }
   const [modal, setModal] = useState<string>(MODALS.CLOSE);
+
+  const VIEWS = {
+    TABLE: 'Table',
+    LIST: 'List',
+  }
+  const [view, setView] = useState<string>(VIEWS.TABLE);
 
   const [result, setResult] = useState<Result>({ message: '', succeeded: false, show: false });
   const hideAlert = () => setResult({ message: '', succeeded: false, show: false })
@@ -68,8 +76,19 @@ function App() {
             <AiOutlinePlus /> 在庫を追加する
           </Button>{' '}
           <Button variant='outline-dark' onClick={() => setModal(MODALS.MTM)}><AiFillEdit /> 値洗いを実行する</Button>
+          <DropdownButton id='view' title={view} variant='secondary'>
+            <Dropdown.Item onClick={() => setView(VIEWS.TABLE)}>Table</Dropdown.Item>
+            <Dropdown.Item onClick={() => setView(VIEWS.LIST)}>List</Dropdown.Item>
+          </DropdownButton>
         </div>
-        <Table positions={data} />
+
+        <HidableDiv isShow={view === VIEWS.TABLE}>
+          <Table positions={data} />
+        </HidableDiv>
+
+        <HidableDiv isShow={view === VIEWS.LIST}>
+          <CustomTable data={data} />
+        </HidableDiv>
 
 
         <Modal title="在庫を追加する"
@@ -92,6 +111,7 @@ function App() {
         <Alert result={result} close={hideAlert} />
       </div>
     </div>
+
   );
 }
 
